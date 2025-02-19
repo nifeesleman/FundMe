@@ -9,7 +9,7 @@ contract FundMe{
     uint256 public minimumUsd=5e18;
 
     address [] public funders; 
-    
+    mapping (address funder => uint256 amountFunded) public addressToAmountFunder;
     
    function fund() public payable {
 
@@ -20,7 +20,7 @@ contract FundMe{
 
        funders.push(msg.sender);
        // what is revert
-    
+       addressToAmountFunder[msg.sender]+=msg.value;
      
     }
     function getPrice() public view returns(uint256) {
