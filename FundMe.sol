@@ -17,12 +17,18 @@ contract FundMe{
       //Allow user to send ether through minimem ether
       //How do we send ether
       
-       require( msg.value >= minimumUsd ,"Did't send enough fund");
+       require( msg.value.getConverstionRate() >= minimumUsd ,"Did't send enough fund");
 
        funders.push(msg.sender);
        // what is revert
        addressToAmountFunder[msg.sender]+=msg.value;
      
     }
-   
+   function withdraw() public {
+    for(uint256 funderIndex= 0;funderIndex<funders.length;funderIndex++){
+      address funder =funders[funderIndex];
+      addressToAmountFunder[funder]=0;
+    }
+    funders =new address[](0);
+   }
 }
